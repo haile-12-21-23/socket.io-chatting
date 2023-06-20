@@ -14,7 +14,7 @@ io.on('connection', (socket) => {
         const message = {
             message: data.message,
             senderUserName: username,
-            sendAt: Date.now()
+            sentAt: Date.now()
         };
         messages.push(message);
         io.emit('message', message)

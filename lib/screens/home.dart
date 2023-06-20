@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     //Important: If your server is running on localhost and you are testing your app on Android then replace http://localhost:3000 with http://10.0.2.2:3000
     _socket = IO.io(
-      'http://192.168.0.75:3000',
+      'http://localhost:3000',
       IO.OptionBuilder().setTransports(['websocket']).setQuery(
           {'username': widget.username}).build(),
     );
@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (_, provider, __) => ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) {
+                  print('UserName:${provider.messages[index].senderUsername}');
                   final message = provider.messages[index];
                   return Wrap(
                     alignment: message.senderUsername == widget.username
