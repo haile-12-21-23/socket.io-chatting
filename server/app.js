@@ -1,4 +1,3 @@
-const { log } = require('console');
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -7,13 +6,15 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 const messages = [];
 io.on('connection', (socket) => {
-    console.log('UserName:', socket.handshake.query.username);
-    const username = socket.handshake.query.username;
+    console.log('UserName:', socket.handshake.query.senderUsername);
+    console.log('Id:', socket.id);
+    const username = socket.handshake.query.senderUsername;
     socket.on('message', (data) => {
         console.log(data);
         const message = {
+            id: socket.id,
             message: data.message,
-            senderUserName: username,
+            senderUsername: username,
             sentAt: Date.now()
         };
         messages.push(message);

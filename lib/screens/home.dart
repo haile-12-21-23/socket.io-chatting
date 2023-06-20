@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'sender': widget.username
     });
     _messageInputController.clear();
+    print('user:${widget.username}');
   }
 
   _connectSocket() {
@@ -43,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     //Important: If your server is running on localhost and you are testing your app on Android then replace http://localhost:3000 with http://10.0.2.2:3000
     _socket = IO.io(
-      'http://localhost:3000',
+      'http://192.168.1.10:3000',
       IO.OptionBuilder().setTransports(['websocket']).setQuery(
-          {'username': widget.username}).build(),
+          {'senderUsername': widget.username}).build(),
     );
     _connectSocket();
   }
@@ -69,8 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (_, provider, __) => ListView.separated(
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, index) {
-                  print('UserName:${provider.messages[index].senderUsername}');
                   final message = provider.messages[index];
+                  print('UserName:${provider.messages[index].senderUsername}');
+                  print('id:${provider.messages[index].messageId}');
+                  print('UserName:${widget.username}');
                   return Wrap(
                     alignment: message.senderUsername == widget.username
                         ? WrapAlignment.end
